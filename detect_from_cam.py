@@ -1,7 +1,13 @@
 from facenet_pytorch import MTCNN
+import torch
 import cv2 as cv
 
-mtcnn = MTCNN()
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print("Running on device: {}".format(device))
+
+mtcnn = MTCNN(
+    image_size=224, thresholds=[0.4, 0.5, 0.5], min_face_size=60, device=device
+)
 
 vid = cv.VideoCapture(0)
 if vid is None:
